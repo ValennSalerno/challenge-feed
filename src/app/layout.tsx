@@ -19,12 +19,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="grid grid-cols-4 gap-1 p-16">
+      <div className="bg-white grid md:grid-cols-1 lg:grid-cols-4 gap-5 p-16">
           <Navbar />
-          <div className="col-span-2">{children}</div>
-          <div className="px-6">
-            <h1 className="font-bold">Who to follow</h1>
-            <WhoToFollow />
+          <div className="md:col-span-1 lg:col-span-2">{children}</div>
+          <div className="lg:col-span-1">
+            <input
+              type="text"
+              placeholder="Input"
+              className="mb-4 px-3 py-2 text-black bg-slate-100 rounded-full w-full"
+            />
+            <div className="bg-slate-100 rounded-lg py-3 pl-4">
+              <h1 className="text-black text-lg font-bold">Who to follow</h1>
+              <WhoToFollow />
+            </div>
           </div>
         </div>
       </body>
