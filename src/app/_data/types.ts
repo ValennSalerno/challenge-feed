@@ -12,5 +12,5 @@ interface TweetUser {
     createdAt: string;
     likes: number;
     retweets: number;
-    comments: number;
+    comments?: Tweet[];
   }

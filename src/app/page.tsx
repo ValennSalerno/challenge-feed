@@ -4,8 +4,7 @@ import tweets from "./_data/tweets.json";
 export default function Home() {
   return (
     <main>
-      <TweetsList tweets={tweets}
-      />
+      <TweetsList tweets={tweets} shouldRedirect showTopDate />
     </main>
   );
 }
