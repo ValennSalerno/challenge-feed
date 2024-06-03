@@ -1,7 +1,6 @@
 "use client";
 
 import { format } from "date-fns";
-
 import { useRouter } from "next/navigation";
 import { UserAvatar } from "./user-avatar";
 import { useState } from "react";
@@ -32,7 +31,7 @@ export function TweetsItem({
 
   return (
     <div
-      className="bg-white py-5 px-4 border rounded-md flex gap-4 text-slate-500"
+      className="bg-white py-3 px-4 flex gap-4 text-slate-500 border-b"
       onClick={() => (shouldRedirect ? push(`/tweet/${tweet.id}`) : null)}
       role={shouldRedirect ? "button" : "article"}
     >

@@ -17,13 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-white min-h-screen">
+    <html lang="en" >
       <body className={`${inter.className} bg-white min-h-screen`}>
       <div className="bg-white grid md:grid-cols-1 lg:grid-cols-4 gap-5 p-4 min-h-screen">
           <Navbar />
           <div className="md:col-span-1 lg:col-span-2"> 
             <h1 className="text-black font-bold pl-3">Home</h1>
+            <div className="border">
             {children}
+            </div>
           </div>
           <div className="lg:col-span-1 pr-12">
             <input
