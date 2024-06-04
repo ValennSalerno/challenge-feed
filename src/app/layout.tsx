@@ -19,14 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body className={`${inter.className} bg-white min-h-screen`}>
-      <div className="bg-white grid md:grid-cols-1 lg:grid-cols-4 gap-5 p-4 min-h-screen">
+      <div className="bg-white grid grid-cols-1 lg:grid-cols-4 gap-5 p-4 min-h-screen">
           <Navbar />
-          <div className="md:col-span-1 lg:col-span-2"> 
+          <div className="col-span-1 lg:col-span-2 flex flex-col gap-5">
             <div>
               {children}
             </div>
           </div>
-          <div className="lg:col-span-1 pr-12">
+          <div className="col-span-1 pr-4 lg:pr-12 flex flex-col gap-4">
             <input
               type="text"
               placeholder="Input"
