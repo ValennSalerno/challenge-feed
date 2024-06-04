@@ -20,7 +20,9 @@ export function TweetsItem({
   const [tweet, setTweet] = useState(data);
   const [actions, setActions] = useState({ like: false, retweet: false });
 
-  const handleAction = (type: "like" | "retweet") => {
+  //const handleAction = (type: "like" | "retweet") => {
+  const handleAction = (type: "like" | "retweet", event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation(); // Detener la propagación del evento
     const key = type === "like" ? "likes" : "retweets";
     setTweet((prev) => ({
       ...prev,
@@ -79,7 +81,7 @@ export function TweetsItem({
           </div>
           <div
             className="flex gap-1"
-            onClick={() => handleAction("retweet")}
+            onClick={(event) => handleAction("retweet", event)} // Paso el evento al manejador de acción
             role="button"
           >
             <svg
@@ -104,7 +106,7 @@ export function TweetsItem({
           </div>
           <div
             className="flex gap-1"
-            onClick={() => handleAction("like")}
+            onClick={(event) => handleAction("like", event)}
             role="button"
           >
             <svg

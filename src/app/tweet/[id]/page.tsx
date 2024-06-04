@@ -16,7 +16,8 @@ export default function TweetPage({ params }: TweetPageProps) {
   }
 
   return (
-    <div>
+    <div className="border-l border-r">
+      <h1 className="text-black font-bold pl-3">Tweet</h1>
       <TweetsItem 
         tweet={tweet} 
         shouldRedirect={false} 

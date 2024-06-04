@@ -22,9 +22,8 @@ export default function RootLayout({
       <div className="bg-white grid md:grid-cols-1 lg:grid-cols-4 gap-5 p-4 min-h-screen">
           <Navbar />
           <div className="md:col-span-1 lg:col-span-2"> 
-            <h1 className="text-black font-bold pl-3">Home</h1>
-            <div className="border">
-            {children}
+            <div>
+              {children}
             </div>
           </div>
           <div className="lg:col-span-1 pr-12">
