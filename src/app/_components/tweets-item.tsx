@@ -21,6 +21,7 @@ export function TweetsItem({
   const { push } = useRouter();
   const [tweet, setTweet] = useState(data);
   const [actions, setActions] = useState({ like: false, retweet: false });
+  const [isProcessing, setIsProcessing] = useState({ like: false, retweet: false });
 
   const simulateRequest = (type: "like" | "retweet") => {
     return new Promise((resolve, reject) => {
@@ -34,8 +35,12 @@ export function TweetsItem({
   };
 
   const handleAction = (type: "like" | "retweet") => {
+    if (isProcessing[type]) return; // Evitar acciones repetidas
+
+    setIsProcessing(prev => ({ ...prev, [type]: true }));
     const key = type === "like" ? "likes" : "retweets";
-    return simulateRequest(type)
+
+    simulateRequest(type)
       .then(() => {
         setTweet((prev) => ({
           ...prev,
@@ -46,6 +51,9 @@ export function TweetsItem({
       .catch((e) => {
         console.error(e.message); // Simulando que puedo verlo en NewRelic u otro
         return toast.error(e.message);
+      })
+      .finally(() => {
+        setIsProcessing(prev => ({ ...prev, [type]: false }));
       });
   };
 
