@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { UserAvatar } from "./user-avatar";
 import { useState } from "react";
 
+import toast, { Toaster } from "react-hot-toast";
+
 interface TweetsItemProps {
   tweet: Tweet;
   shouldRedirect: boolean;
@@ -20,15 +22,31 @@ export function TweetsItem({
   const [tweet, setTweet] = useState(data);
   const [actions, setActions] = useState({ like: false, retweet: false });
 
-  //const handleAction = (type: "like" | "retweet") => {
-  const handleAction = (type: "like" | "retweet", event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation(); // Detener la propagación del evento
+  const simulateRequest = (type: "like" | "retweet") => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulo una chance del 20% del fallo del request
+        Math.random() < 0.2
+          ? reject(new Error("Internal Server Error"))
+          : resolve(`Success: ${type}`);
+      }, 500);
+    });
+  };
+
+  const handleAction = (type: "like" | "retweet") => {
     const key = type === "like" ? "likes" : "retweets";
-    setTweet((prev) => ({
-      ...prev,
-      [key]: actions[type] ? prev[key] - 1 : prev[key] + 1,
-    }));
-    setActions((prev) => ({ ...prev, [type]: !prev[type] }));
+    return simulateRequest(type)
+      .then(() => {
+        setTweet((prev) => ({
+          ...prev,
+          [key]: actions[type] ? prev[key] - 1 : prev[key] + 1,
+        }));
+        setActions((prev) => ({ ...prev, [type]: !prev[type] }));
+      })
+      .catch((e) => {
+        console.error(e.message); // Simulando que puedo verlo en NewRelic u otro
+        return toast.error(e.message);
+      });
   };
 
   return (
@@ -58,7 +76,7 @@ export function TweetsItem({
             {format(tweet.createdAt, "h:mm a, MMM dd, yyyy")}
           </span>
         ) : null}
-        <div className="flex gap-4">
+        <div className="flex gap-4" onClick={(e) => e.stopPropagation()}>
           <div className="flex gap-1">
             <svg
               className="w-6 h-6 text-gray-800 dark:text-slate-500"
@@ -81,7 +99,7 @@ export function TweetsItem({
           </div>
           <div
             className="flex gap-1"
-            onClick={(event) => handleAction("retweet", event)} // Paso el evento al manejador de acción
+            onClick={(event) => handleAction("retweet")} // Paso el evento al manejador de acción
             role="button"
           >
             <svg
@@ -106,7 +124,7 @@ export function TweetsItem({
           </div>
           <div
             className="flex gap-1"
-            onClick={(event) => handleAction("like", event)}
+            onClick={(event) => handleAction("like")} // Paso el evento al manejador de acción
             role="button"
           >
             <svg
@@ -131,6 +149,7 @@ export function TweetsItem({
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
